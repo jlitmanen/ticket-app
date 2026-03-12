@@ -1,0 +1,150 @@
+[
+  {
+    "id": "prjs00000000001",
+    "name": "projects",
+    "type": "base",
+    "system": false,
+    "fields": [
+      { "id": "text3208210256", "name": "id", "type": "text", "system": true, "required": true, "primaryKey": true, "autogeneratePattern": "[a-z0-9]{15}" },
+      { "id": "text1000000001", "name": "name", "type": "text", "required": true },
+      { "id": "text1000000002", "name": "slug", "type": "text", "required": true },
+      { "id": "text1000000003", "name": "description", "type": "text" },
+      { "id": "sel1000000001", "name": "status", "type": "select", "values": ["active", "archived"], "maxSelect": 1 },
+      { "id": "bool100000001", "name": "reporter_intake_enabled", "type": "bool" },
+      { "id": "text1000000004", "name": "reporter_intake_token", "type": "text" },
+      { "id": "rel1000000001", "name": "created_by", "type": "relation", "collectionId": "_pb_users_auth_", "maxSelect": 1 },
+      { "id": "autodate2990389176", "name": "created", "type": "autodate", "system": true, "onCreate": true, "onUpdate": false },
+      { "id": "autodate3332085495", "name": "updated", "type": "autodate", "system": true, "onCreate": true, "onUpdate": true }
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != ''",
+    "updateRule": "@request.auth.id != ''",
+    "deleteRule": "@request.auth.id != ''"
+  },
+  {
+    "id": "reps00000000001",
+    "name": "reporters",
+    "type": "base",
+    "system": false,
+    "fields": [
+      { "id": "text3208210256", "name": "id", "type": "text", "system": true, "required": true, "primaryKey": true, "autogeneratePattern": "[a-z0-9]{15}" },
+      { "id": "rel2000000001", "name": "project", "type": "relation", "collectionId": "prjs00000000001", "maxSelect": 1, "cascadeDelete": true },
+      { "id": "text2000000001", "name": "name", "type": "text", "required": true },
+      { "id": "email200000001", "name": "email", "type": "email", "required": true },
+      { "id": "autodate2990389176", "name": "created", "type": "autodate", "system": true, "onCreate": true, "onUpdate": false },
+      { "id": "autodate3332085495", "name": "updated", "type": "autodate", "system": true, "onCreate": true, "onUpdate": true }
+    ],
+    "listRule": null,
+    "viewRule": null,
+    "createRule": null,
+    "updateRule": null,
+    "deleteRule": null
+  },
+  {
+    "id": "tiks00000000001",
+    "name": "tickets",
+    "type": "base",
+    "system": false,
+    "fields": [
+      { "id": "text3208210256", "name": "id", "type": "text", "system": true, "required": true, "primaryKey": true, "autogeneratePattern": "[a-z0-9]{15}" },
+      { "id": "text3000000001", "name": "short_id", "type": "text" },
+      { "id": "rel3000000001", "name": "project", "type": "relation", "collectionId": "prjs00000000001", "maxSelect": 1, "cascadeDelete": true },
+      { "id": "text3000000002", "name": "title", "type": "text", "required": true },
+      { "id": "text3000000003", "name": "description", "type": "text" },
+      { "id": "sel3000000001", "name": "type", "type": "select", "values": ["bug", "feature", "task", "chore", "question"], "maxSelect": 1 },
+      { "id": "sel3000000002", "name": "status", "type": "select", "values": ["backlog", "waiting", "in_progress", "in_review", "done", "rejected"], "maxSelect": 1 },
+      { "id": "sel3000000003", "name": "priority", "type": "select", "values": ["none", "low", "medium", "high", "critical"], "maxSelect": 1 },
+      { "id": "rel3000000002", "name": "assignee", "type": "relation", "collectionId": "_pb_users_auth_", "maxSelect": 1 },
+      { "id": "rel3000000003", "name": "reporter_ext", "type": "relation", "collectionId": "reps00000000001", "maxSelect": 1 },
+      { "id": "num3000000001", "name": "position", "type": "number" },
+      { "id": "file300000001", "name": "attachments", "type": "file", "maxSelect": 10, "maxSize": 20971520 },
+      { "id": "autodate2990389176", "name": "created", "type": "autodate", "system": true, "onCreate": true, "onUpdate": false },
+      { "id": "autodate3332085495", "name": "updated", "type": "autodate", "system": true, "onCreate": true, "onUpdate": true }
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != ''",
+    "updateRule": "@request.auth.id != ''",
+    "deleteRule": "@request.auth.id != ''"
+  },
+  {
+    "id": "coms00000000001",
+    "name": "comments",
+    "type": "base",
+    "system": false,
+    "fields": [
+      { "id": "text3208210256", "name": "id", "type": "text", "system": true, "required": true, "primaryKey": true, "autogeneratePattern": "[a-z0-9]{15}" },
+      { "id": "rel4000000001", "name": "ticket", "type": "relation", "collectionId": "tiks00000000001", "maxSelect": 1, "cascadeDelete": true },
+      { "id": "rel4000000002", "name": "author_user", "type": "relation", "collectionId": "_pb_users_auth_", "maxSelect": 1 },
+      { "id": "text4000000001", "name": "body", "type": "text", "required": true },
+      { "id": "autodate2990389176", "name": "created", "type": "autodate", "system": true, "onCreate": true, "onUpdate": false },
+      { "id": "autodate3332085495", "name": "updated", "type": "autodate", "system": true, "onCreate": true, "onUpdate": true }
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != ''",
+    "updateRule": "@request.auth.id != ''",
+    "deleteRule": "@request.auth.id != ''"
+  },
+  {
+    "id": "mems00000000001",
+    "name": "project_memberships",
+    "type": "base",
+    "system": false,
+    "fields": [
+      { "id": "text3208210256", "name": "id", "type": "text", "system": true, "required": true, "primaryKey": true, "autogeneratePattern": "[a-z0-9]{15}" },
+      { "id": "rel5000000001", "name": "project", "type": "relation", "collectionId": "prjs00000000001", "maxSelect": 1, "cascadeDelete": true },
+      { "id": "rel5000000002", "name": "user", "type": "relation", "collectionId": "_pb_users_auth_", "maxSelect": 1, "cascadeDelete": true },
+      { "id": "sel5000000001", "name": "role", "type": "select", "values": ["owner", "admin", "member", "viewer"], "maxSelect": 1 },
+      { "id": "autodate2990389176", "name": "created", "type": "autodate", "system": true, "onCreate": true, "onUpdate": false },
+      { "id": "autodate3332085495", "name": "updated", "type": "autodate", "system": true, "onCreate": true, "onUpdate": true }
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "@request.auth.id != ''",
+    "updateRule": "@request.auth.id != ''",
+    "deleteRule": "@request.auth.id != ''"
+  },
+  {
+    "id": "notfs00000000001",
+    "name": "notifications",
+    "type": "base",
+    "system": false,
+    "fields": [
+      { "id": "text3208210256", "name": "id", "type": "text", "system": true, "required": true, "primaryKey": true, "autogeneratePattern": "[a-z0-9]{15}" },
+      { "id": "rel6000000001", "name": "recipient", "type": "relation", "collectionId": "_pb_users_auth_", "maxSelect": 1, "cascadeDelete": true },
+      { "id": "sel6000000001", "name": "type", "type": "select", "values": ["ticket_assigned", "ticket_commented", "ticket_status_changed", "ticket_created", "mention"], "maxSelect": 1 },
+      { "id": "rel6000000002", "name": "ticket", "type": "relation", "collectionId": "tiks00000000001", "maxSelect": 1, "cascadeDelete": true },
+      { "id": "text6000000001", "name": "message", "type": "text" },
+      { "id": "bool600000001", "name": "read", "type": "bool" },
+      { "id": "autodate2990389176", "name": "created", "type": "autodate", "system": true, "onCreate": true, "onUpdate": false },
+      { "id": "autodate3332085495", "name": "updated", "type": "autodate", "system": true, "onCreate": true, "onUpdate": true }
+    ],
+    "listRule": "recipient = @request.auth.id",
+    "viewRule": "recipient = @request.auth.id",
+    "createRule": null,
+    "updateRule": "recipient = @request.auth.id",
+    "deleteRule": "recipient = @request.auth.id"
+  },
+  {
+    "id": "hists00000000001",
+    "name": "ticket_history",
+    "type": "base",
+    "system": false,
+    "fields": [
+      { "id": "text3208210256", "name": "id", "type": "text", "system": true, "required": true, "primaryKey": true, "autogeneratePattern": "[a-z0-9]{15}" },
+      { "id": "rel7000000001", "name": "ticket", "type": "relation", "collectionId": "tiks00000000001", "maxSelect": 1, "cascadeDelete": true },
+      { "id": "text7000000001", "name": "field", "type": "text", "required": true },
+      { "id": "text7000000002", "name": "old_value", "type": "text" },
+      { "id": "text7000000003", "name": "new_value", "type": "text" },
+      { "id": "autodate2990389176", "name": "created", "type": "autodate", "system": true, "onCreate": true, "onUpdate": false },
+      { "id": "autodate3332085495", "name": "updated", "type": "autodate", "system": true, "onCreate": true, "onUpdate": true }
+    ],
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": null,
+    "updateRule": null,
+    "deleteRule": null
+  }
+]
